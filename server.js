@@ -16,7 +16,7 @@ let key = process.env.GOOGLE_API_KEY;
 
 
 app.post("/places/textsearch", async (req, res) => {
-  const { query = "ilorin nigeria", language = "en", radius = 2000 } = req.body;
+  const { query = "lagos nigeria", language = "en", radius = 2000 } = req.body;
 
 
   const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${
