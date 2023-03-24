@@ -16,7 +16,7 @@ let key = "AIzaSyB3jDkad-0Rk7QSmaSQHrVKcjR5bJHgkk4";
 
 app.post("/places/textsearch", async (req, res) => {
   const { query = "dubai", language = "en", radius = 2000 } = req.body;
-  
+
   //   const { query, language, radius } = {
   //     query: "dubai point of interest",
   //     language: "en",
@@ -43,9 +43,7 @@ app.post("/places/textsearch", async (req, res) => {
             (photo, i) =>
               `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${photo.photo_reference}&key=${key}`
           ),
-          weekday_text: reviewsData?.result?.weekday_text,
-          open_now: reviewsData.result.open_now,
-          operations_periods: reviewsData?.result?.periods,
+          weekday_text: reviewsData?.result?.current_opening_hours,
           business_status: attraction?.business_status,
           attraction_address: attraction?.formatted_address,
           attraction_name: attraction?.name,
@@ -60,7 +58,7 @@ app.post("/places/textsearch", async (req, res) => {
           international_phone_number:
           reviewsData?.result?.international_phone_number,
           user_reviews: reviewsData?.result?.reviews,
-         reviewsData:reviewsData?.result
+          editorial_summary: reviewsData?.result?.editorial_summary
         };
       })
     );
