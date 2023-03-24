@@ -1,14 +1,20 @@
 import express from "express";
 import bodyParser from "body-parser";
 import fetch from "node-fetch";
+import dotenv from 'dotenv';
+
 
 const app = express();
 const port = 3000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+dotenv.config();
+
 
 let key = process.env.GOOGLE_API_KEY;
+
+console.log(key);
 
 app.post("/places/textsearch", async (req, res) => {
   const { query = "nigeria", language = "en", radius = 2000 } = req.body;
