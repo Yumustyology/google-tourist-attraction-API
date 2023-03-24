@@ -59,7 +59,6 @@ app.post("/places/textsearch", async (req, res) => {
       })
     );
 
-    // res.json(data);
     res.json(structuredData);
   } catch (error) {
     console.error(error);
@@ -67,32 +66,10 @@ app.post("/places/textsearch", async (req, res) => {
   }
 });
 
-app.post("/places/autocomplete", async (req, res) => {
-  //   const { query, language, radius, key } = req.body;
-
-  const { input, language, radius } = {
-    query: "dubai point of interest",
-    language: "en",
-    radius: "2000",
-    // key: "AIzaSyBXF6yfKy3K0BKjgF836owacxQj76nFfys",
-    // key: "AIzaSyB3jDkad-0Rk7QSmaSQHrVKcjR5bJHgkk4",
-  };
-
-  const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&types=${types}&location=${location}&radius=${radius}&key=${key}`;
-
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    res.json(data);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
 
 app.get("/", (req, res) => {
   res.send({
-    welcome: "yo",
+    welcome: "welcome to the google place map api implementation",
   });
 });
 
