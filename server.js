@@ -16,8 +16,8 @@ app.post("/places/tourist_attraction", async (req, res) => {
   const {
     language = "en",
     radius = 2000,
-    lng = 3.406448,
-    lat = 6.435572,
+    lng = -73.58781,
+    lat = 45.50884,
   } = req.body;
 
   const url = `https://maps.googleapis.com/maps/api/place/textsearch/json
@@ -73,9 +73,9 @@ app.post("/places/type_search", async (req, res) => {
   const {
     language = "en",
     radius = 2000,
-    lng = 3.406448,
-    lat = 6.435572,
-    type="airport",
+    lng = -73.58781,
+    lat = 45.50884,
+    type = "restaurant",
   } = req.body;
 
   const url = `https://maps.googleapis.com/maps/api/place/textsearch/json
@@ -121,10 +121,10 @@ app.post("/places/type_search", async (req, res) => {
     );
 
     res.json({
-      data:{
-        places:structuredData,
-        success:true
-      }
+      data: {
+        places: structuredData,
+        success: true,
+      },
     });
   } catch (error) {
     console.error(error);
