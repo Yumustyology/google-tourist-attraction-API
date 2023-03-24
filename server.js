@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 dotenv.config();
 
-let key = process.env.GOOGLE_API_KEY;
+let key = process.env.NODE_GOOGLE_API_KEY;
 
 app.post("/places/tourist_attraction", async (req, res) => {
   const {
