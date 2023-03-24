@@ -14,7 +14,6 @@ dotenv.config();
 
 let key = process.env.GOOGLE_API_KEY;
 
-console.log(key);
 
 app.post("/places/textsearch", async (req, res) => {
   const { query = "nigeria", language = "en", radius = 2000 } = req.body;
