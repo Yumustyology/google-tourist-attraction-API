@@ -1,7 +1,3 @@
-// const express = require('express');
-// const bodyParser = require('body-parser');
-// const fetch = require('node-fetch');
-
 import express from "express";
 import bodyParser from "body-parser";
 import fetch from "node-fetch";
@@ -12,16 +8,11 @@ const port = 3000;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-let key = "AIzaSyB3jDkad-0Rk7QSmaSQHrVKcjR5bJHgkk4";
+let key = process.env.GOOGLE_API_KEY;
 
 app.post("/places/textsearch", async (req, res) => {
-  const { query = "dubai", language = "en", radius = 2000 } = req.body;
+  const { query = "nigeria", language = "en", radius = 2000 } = req.body;
 
-  //   const { query, language, radius } = {
-  //     query: "dubai point of interest",
-  //     language: "en",
-  //     radius: "2000",
-  //   };
 
   const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${
     query + " point of interest"
