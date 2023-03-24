@@ -1,8 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import fetch from "node-fetch";
-import dotenv from 'dotenv';
-
+import dotenv from "dotenv";
 
 const app = express();
 const port = 3000;
@@ -11,18 +10,24 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 dotenv.config();
 
-
 let key = process.env.GOOGLE_API_KEY;
 
-
 app.post("/places/textsearch", async (req, res) => {
-  const { query = "lagos nigeria", language = "en", radius = 2000 } = req.body;
+  const {
+    query = "lagos nigeria",
+    language = "en",
+    radius = 2000,
+    lng = 3.406448,
+    lat = 6.435572,
+  } = req.body;
 
 
-  const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${
-    query + " point of interest"
-  }&language=${language}&radius=${radius}&key=${key}`;
-
+  const url = `https://maps.googleapis.com/maps/api/place/textsearch/json
+?location=${lat}%2C${lng}
+&query=points%20of%20attraction
+&language=${language}
+&radius=${radius}
+&key=${key}`;
   try {
     const response = await fetch(url);
     const data = await response.json();
@@ -49,12 +54,12 @@ app.post("/places/textsearch", async (req, res) => {
           viewport: attraction?.viewport,
           southwest: attraction?.southwest,
           international_phone_number:
-          reviewsData?.result?.international_phone_number,
+            reviewsData?.result?.international_phone_number,
           user_reviews: reviewsData?.result?.reviews,
           attraction_images: reviewsData?.result?.photos?.map(
             (photo, i) =>
               `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${photo.photo_reference}&key=${key}`
-          )
+          ),
         };
       })
     );
@@ -65,7 +70,6 @@ app.post("/places/textsearch", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
 
 app.get("/", (req, res) => {
   res.send({
