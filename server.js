@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 dotenv.config();
 
 let key = process.env.NODE_GOOGLE_API_KEY;
-console.log(key)
+
 app.post("/places/textsearch", async (req, res) => {
   const {
     query = "lagos nigeria",
