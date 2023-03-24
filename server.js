@@ -16,7 +16,7 @@ let key = process.env.GOOGLE_API_KEY;
 
 
 app.post("/places/textsearch", async (req, res) => {
-  const { query = "nigeria", language = "en", radius = 2000 } = req.body;
+  const { query = "ilorin nigeria", language = "en", radius = 2000 } = req.body;
 
 
   const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${
@@ -35,10 +35,7 @@ app.post("/places/textsearch", async (req, res) => {
         const reviewsData = await fetchReviews.json();
 
         return {
-          attraction_images: reviewsData?.result?.photos?.map(
-            (photo, i) =>
-              `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${photo.photo_reference}&key=${key}`
-          ),
+          editorial_summary: reviewsData?.result?.editorial_summary,
           weekday_text: reviewsData?.result?.current_opening_hours,
           business_status: attraction?.business_status,
           attraction_address: attraction?.formatted_address,
@@ -54,7 +51,10 @@ app.post("/places/textsearch", async (req, res) => {
           international_phone_number:
           reviewsData?.result?.international_phone_number,
           user_reviews: reviewsData?.result?.reviews,
-          editorial_summary: reviewsData?.result?.editorial_summary
+          attraction_images: reviewsData?.result?.photos?.map(
+            (photo, i) =>
+              `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${photo.photo_reference}&key=${key}`
+          )
         };
       })
     );
