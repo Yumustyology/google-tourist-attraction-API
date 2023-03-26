@@ -143,11 +143,11 @@ app.post("/places/type_search", async (req, res) => {
 app.post("/places/keyword_search", async (req, res) => {
   const {
     language = "en",
-    radius = 2000,
+    radius = 500,
     lng = -73.58781,
     lat = 45.50884,
     type = "tourist_attraction",
-    keyword = "tour",
+    keyword = "museum",
   } = req.body;
 
   const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json
@@ -156,6 +156,7 @@ app.post("/places/keyword_search", async (req, res) => {
 &radius=${radius}
 &types=${type}
 &key=${key}
+&strictbounds=true
 &language=${language}`;
 
   try {
@@ -183,8 +184,7 @@ app.post("/places/keyword_search", async (req, res) => {
           geometry: reviewsData?.result?.geometry,
           international_phone_number:
             reviewsData?.result?.international_phone_number,
-          formatted_phone_number:
-            reviewsData?.result?.formatted_phone_number,
+          formatted_phone_number: reviewsData?.result?.formatted_phone_number,
           map_url: reviewsData?.result?.url,
           attraction_images: reviewsData?.result?.photos?.map(
             (photo, i) =>
@@ -196,7 +196,6 @@ app.post("/places/keyword_search", async (req, res) => {
         };
       })
     );
-
 
     res.json({
       data: {
