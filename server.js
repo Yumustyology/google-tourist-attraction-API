@@ -144,10 +144,10 @@ app.post("/places/keyword_search", async (req, res) => {
   const {
     language = "en",
     radius = 500,
-    // lng = -73.58781,
-    // lat = 45.50884,
-    lng,
-    lat,
+    lng = -73.58781,
+    lat = 45.50884,
+    // lng,
+    // lat,
     // type = "tourist_attraction",
     keyword = "museum",
   } = req.body;
