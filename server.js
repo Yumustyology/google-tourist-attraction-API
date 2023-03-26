@@ -146,7 +146,7 @@ app.post("/places/keyword_search", async (req, res) => {
     radius = 2000,
     lng = -73.58781,
     lat = 45.50884,
-    type = "restaurant",
+    type = "tourist_attraction",
     keyword = "imperial",
   } = req.body;
 
