@@ -155,9 +155,9 @@ app.post("/places/keyword_search", async (req, res) => {
 &location=${lat}%2C${lng}
 &radius=${radius}
 &types=${type}
+&language=${language}
 &key=${key}
-&strictbounds=true
-&language=${language}`;
+`;
 
   try {
     const response = await fetch(url);
