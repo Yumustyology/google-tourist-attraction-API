@@ -147,7 +147,7 @@ app.post("/places/keyword_search", async (req, res) => {
     lng = -73.58781,
     lat = 45.50884,
     type = "tourist_attraction",
-    keyword = "imperial",
+    keyword = "tour",
   } = req.body;
 
   const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json
