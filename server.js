@@ -143,12 +143,9 @@ app.post("/places/type_search", async (req, res) => {
 app.post("/places/keyword_search", async (req, res) => {
   const {
     language = "en",
-    // radius = 2000,
-    radius = 3000,
-    // lng = -73.58781,
-    // lat = 45.50884,
-    lat =  6.592922,
-    lng = 3.339059,
+    radius = 2000,
+    lng = -73.58781,
+    lat = 45.50884,
     type = "restaurant",
     keyword = "imperial",
   } = req.body;
