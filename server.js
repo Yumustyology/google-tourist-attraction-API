@@ -86,6 +86,8 @@ app.post("/places/type_search", async (req, res) => {
 &types=${type}
 &radius=${radius}
 &key=${key}`;
+
+
   try {
     const response = await fetch(url);
     const data = await response.json();
@@ -143,20 +145,21 @@ app.post("/places/type_search", async (req, res) => {
 app.post("/places/keyword_search", async (req, res) => {
   const {
     language = "en",
-    radius = 500,
+    radius = 1500,
     lng = -73.58781,
     lat = 45.50884,
     // lng,
     // lat,
-    // type = "tourist_attraction",
-    keyword = "museum",
+    type = "tourist_attraction",
+    keyword = "tour",
   } = req.body;
 
-  const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json
-?input=${keyword}
+  const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json
+?keyword=${keyword}
 &location=${lat}%2C${lng}
 &radius=${radius}
 &language=${language}
+&type=${type}
 &key=${key}
 `;
 
