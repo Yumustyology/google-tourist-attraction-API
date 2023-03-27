@@ -169,7 +169,8 @@ app.post("/places/keyword_search", async (req, res) => {
     const response = await fetch(url);
     const data = await response.json();
     const structuredData = await Promise.all(
-      data?.predictions?.map(async (attraction, i) => {
+      // data?.predictions?.map(async (attraction, i) => {
+        data?.results?.map(async (attraction, i) => {
         const fetchReviews = await fetch(
           `https://maps.googleapis.com/maps/api/place/details/json?placeid=${attraction.place_id}&key=${key}`
         );
