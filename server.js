@@ -87,7 +87,6 @@ app.post("/places/type_search", async (req, res) => {
 &radius=${radius}
 &key=${key}`;
 
-
   try {
     const response = await fetch(url);
     const data = await response.json();
@@ -163,14 +162,12 @@ app.post("/places/keyword_search", async (req, res) => {
 &key=${key}
 `;
 
-  // &types=${type}
-
   try {
     const response = await fetch(url);
     const data = await response.json();
     const structuredData = await Promise.all(
       // data?.predictions?.map(async (attraction, i) => {
-        data?.results?.map(async (attraction, i) => {
+      data?.results?.map(async (attraction, i) => {
         const fetchReviews = await fetch(
           `https://maps.googleapis.com/maps/api/place/details/json?placeid=${attraction.place_id}&key=${key}`
         );
@@ -210,6 +207,74 @@ app.post("/places/keyword_search", async (req, res) => {
         success: true,
       },
     });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ error: "Internal server error", message: error.message });
+  }
+});
+
+app.post("/places/province_search", async (req, res) => {
+  const {
+    language = "en",
+    radius = 1500,
+    type = "tourist_attraction",
+    input="Nova Scotia, Canada"
+  } = req.body;
+
+  const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${input+" "+ type}&radius=${radius}&language=${language}&key=${key}
+`;
+
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    const structuredData = await Promise.all(
+      data?.results?.map(async (attraction, i) => {
+        const fetchReviews = await fetch(
+          `https://maps.googleapis.com/maps/api/place/details/json?placeid=${attraction.place_id}&key=${key}`
+        );
+        const reviewsData = await fetchReviews.json();
+
+        return {
+          editorial_summary: reviewsData?.result?.editorial_summary,
+          weekday_text: reviewsData?.result?.current_opening_hours,
+          business_status: reviewsData?.result?.business_status,
+          attraction_address: reviewsData?.result?.formatted_address,
+          terms: attraction?.terms,
+          attraction_name: reviewsData?.result?.name,
+          description: attraction?.description,
+          ratings: reviewsData?.result?.rating,
+          reference: attraction?.reference,
+          attraction_types: reviewsData?.result?.types,
+          user_ratings_total: reviewsData?.result?.user_ratings_total,
+          geometry: reviewsData?.result?.geometry,
+          international_phone_number:
+            reviewsData?.result?.international_phone_number,
+          formatted_phone_number: reviewsData?.result?.formatted_phone_number,
+          map_url: reviewsData?.result?.url,
+          attraction_images: reviewsData?.result?.photos?.map(
+            (photo, i) =>
+              `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${photo.photo_reference}&key=${key}`
+          ),
+          website: reviewsData?.result?.website,
+          vicinity: reviewsData?.result?.vicinity,
+          user_reviews: reviewsData?.result?.reviews,
+        };
+      })
+    );
+
+    res.json({
+      data: {
+        places: structuredData,
+        success: true,
+      },
+    });
+
+    // res.json({
+    //   data
+    // })
   } catch (error) {
     console.error(error);
     res
